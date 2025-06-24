@@ -10,4 +10,4 @@ lint:
 test:
 	nvim --headless --noplugin -u scripts/tests/minimal.vim -c "PlenaryBustedDirectory lua/nuggets/ { minimal_init = 'scripts/tests/minimal.vim' }"
 
-pr-ready: lua_test lua_fmt lua_lint
+pr-ready: test fmt lint
