@@ -34,9 +34,7 @@ M._get_package_latest = get_package_latest
 local get_lines_from_string = function(str)
   local lines = {}
   for part in string.gmatch(str, "([^\n]+)") do
-    -- trim linebreaks and whitespace
     part = part:gsub("[\n\r]", "")
-    -- part = part:gsub("%s+", "")
     table.insert(lines, part)
   end
   return lines
@@ -44,31 +42,20 @@ end
 function M.parse(str)
   local lines = get_lines_from_string(str)
 
-  -- print(vim.inspect(lines))
-
   local result = {}
-  -- for _, v in ipairs(lines) do
   local i = 0
   while i < #lines do
     i = i + 1
-    print("Processing line: " .. i)
     local v = lines[i]
-    print(get_project_name(v))
     if get_project_name(v) then
       local project_name = get_project_name(v)
       result[project_name] = {}
 
-      -- print("Incrementing i by 3: " .. i)
-      -- i = i + 3
-
       for j = i + 3, #lines do
-        print("Processing package line: " .. j)
         local package_name = get_package_name(lines[j])
         if package_name == nil then
-          print("No package name found, breaking")
           break
         end
-        print("Package name: " .. package_name)
         local package_version = get_package_version(lines[j])
         local package_latest = get_package_latest(lines[j])
         result[project_name][package_name] = {
@@ -78,13 +65,8 @@ function M.parse(str)
         }
       end
     end
-    -- print(v)
-    -- for c in str:gmatch "." do
-    --   print(c .. "\n")
-    -- end
   end
 
-  -- print(vim.inspect(t))
   return result
 end
 
