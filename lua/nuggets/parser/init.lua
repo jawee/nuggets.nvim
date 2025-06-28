@@ -48,20 +48,24 @@ function M.parse(str)
 
   local result = {}
   -- for _, v in ipairs(lines) do
-  for i = 1, #lines, 1 do
+  local i = 0
+  while i < #lines do
+    i = i + 1
+    print("Processing line: " .. i)
     local v = lines[i]
-    -- print(get_project_name(v))
+    print(get_project_name(v))
     if get_project_name(v) then
       local project_name = get_project_name(v)
       result[project_name] = {}
 
-      i = i + 3
+      -- print("Incrementing i by 3: " .. i)
+      -- i = i + 3
 
-      for j = i, #lines, 1 do
+      for j = i + 3, #lines do
+        print("Processing package line: " .. j)
         local package_name = get_package_name(lines[j])
         if package_name == nil then
           print("No package name found, breaking")
-          i = j
           break
         end
         print("Package name: " .. package_name)

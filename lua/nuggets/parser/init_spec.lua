@@ -21,7 +21,9 @@ describe("parse", function()
   it("should parse the string correctly", function()
     local expected = {
       ExampleApi = {},
-      Authenticatly = { ["System.IdentityModel.Tokens.Jwt"] = { Requested = "8.12.0", Resolved = "8.12.0", Latest = "8.12.1" } },
+      Authenticatly = {
+        ["System.IdentityModel.Tokens.Jwt"] = { Requested = "8.12.0", Resolved = "8.12.0", Latest = "8.12.1" },
+      },
     }
 
     local input = [[
@@ -41,10 +43,12 @@ describe("parse", function()
   it("should parse multiple projects correctly", function()
     local expected = {
       ExampleApi = {},
-      Authenticatly = { ["System.IdentityModel.Tokens.Jwt"] = { Requested = "8.12.0", Resolved = "8.12.0", Latest = "8.12.1" } },
+      Authenticatly = {
+        ["System.IdentityModel.Tokens.Jwt"] = { Requested = "8.12.0", Resolved = "8.12.0", Latest = "8.12.1" },
+      },
       ["Authenticatly.IntegrationTests"] = {
         ["MSTest.TestAdapter"] = { Requested = "3.9.2", Resolved = "3.9.2", Latest = "3.9.3" },
-        ["MSTest.TestFramework"] = { Requested = "3.9.2", Resolved = "3.9.2", Latest = "3.9.3" }
+        ["MSTest.TestFramework"] = { Requested = "3.9.2", Resolved = "3.9.2", Latest = "3.9.3" },
       },
     }
 
