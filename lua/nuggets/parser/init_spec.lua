@@ -22,7 +22,7 @@ describe("parse", function()
     local expected = {
       ExampleApi = {},
       Authenticatly = {
-        ["System.IdentityModel.Tokens.Jwt"] = { Requested = "8.12.0", Resolved = "8.12.0", Latest = "8.12.1" },
+        ["System.IdentityModel.Tokens.Jwt"] = { Requested = "8.12.0", Latest = "8.12.1" },
       },
     }
 
@@ -44,11 +44,11 @@ describe("parse", function()
     local expected = {
       ExampleApi = {},
       Authenticatly = {
-        ["System.IdentityModel.Tokens.Jwt"] = { Requested = "8.12.0", Resolved = "8.12.0", Latest = "8.12.1" },
+        ["System.IdentityModel.Tokens.Jwt"] = { Requested = "8.12.0", Latest = "8.12.1" },
       },
       ["Authenticatly.IntegrationTests"] = {
-        ["MSTest.TestAdapter"] = { Requested = "3.9.2", Resolved = "3.9.2", Latest = "3.9.3" },
-        ["MSTest.TestFramework"] = { Requested = "3.9.2", Resolved = "3.9.2", Latest = "3.9.3" },
+        ["MSTest.TestAdapter"] = { Requested = "3.9.2", Latest = "3.9.3" },
+        ["MSTest.TestFramework"] = { Requested = "3.9.2", Latest = "3.9.3" },
       },
     }
 

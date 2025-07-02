@@ -39,6 +39,9 @@ local get_lines_from_string = function(str)
   end
   return lines
 end
+
+--- @param str string
+--- @returns table<string, table<string, {Requested: string, Latest: string}>>
 function M.parse(str)
   local lines = get_lines_from_string(str)
 
@@ -60,7 +63,6 @@ function M.parse(str)
         local package_latest = get_package_latest(lines[j])
         result[project_name][package_name] = {
           Requested = package_version,
-          Resolved = package_version,
           Latest = package_latest,
         }
       end
