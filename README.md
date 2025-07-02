@@ -12,6 +12,9 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 return {
   "jawee/nuggets.nvim",
+  dependencies = {
+    'j-hui/fidget.nvim',
+  },
   config = function()
     require("nuggets").setup({})
     vim.keymap.set("n", "<leader>nu", "<cmd>Nuggets<CR>")
