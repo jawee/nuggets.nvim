@@ -21,9 +21,9 @@ end
 function M.create_progress_handle(message)
   local progress = require("fidget.progress")
   local handle = progress.handle.create({
-    title = "Azuredo",
+    title = "Nuggets",
     message = "",
-    lsp_client = { name = message or "Calling DevOps" },
+    lsp_client = { name = message or "Doing things" },
     percentage = 0,
   })
   return handle
@@ -31,7 +31,7 @@ end
 
 function M.progress_report(handle, message, percentage)
   handle:report({
-    title = "Azuredo",
+    title = "Nuggets",
     message = message,
     percentage = percentage,
   })
