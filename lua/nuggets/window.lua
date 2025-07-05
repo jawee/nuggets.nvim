@@ -2,7 +2,7 @@ local M = {}
 
 ---@param results string[]
 ---@param callback fun(integer)
-function M.createTelescopeWindow(results, callback, prompt_title, results_title)
+function M.create_telescope_window(results, callback, prompt_title, results_title)
   local pickers = require("telescope.pickers")
   local finders = require("telescope.finders")
   local conf = require("telescope.config").values
@@ -36,7 +36,7 @@ function M.createTelescopeWindow(results, callback, prompt_title, results_title)
 end
 
 ---@param options string[]
-function M.createResultsWindow(options)
+function M.create_results_window(options)
   local buf = vim.api.nvim_create_buf(false, true)
   local width = 80
   local max_height = 20

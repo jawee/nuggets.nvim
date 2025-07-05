@@ -7,32 +7,8 @@ local M = {}
 
 function M.setup(_) end
 
----@type table<string, string>
-local commands = {
-  ["List outdated"] = "dotnet list package --outdated",
-}
-
-function M.openMainMenu()
-  local options = commands or {}
-
-  local selections = {}
-  for k in pairs(options) do
-    table.insert(selections, k)
-  end
-
-  ---@param row integer
-  local function select_current_line(row)
-    local choice = selections[row]
-    if choice then
-      M.executeCommand(choice)
-    end
-  end
-
-  Window.createTelescopeWindow(selections, select_current_line, nil, "Available Commands")
-end
-
 ---@param command string the command to execute
-local function executeCommand(command)
+local function execute_command(command)
   local handle = Notify.create_progress_handle("Executing command: " .. command)
   Command.run_async_command({ command }, function(data)
     local output = table.concat(data, "\n")
@@ -55,7 +31,7 @@ local function executeCommand(command)
       table.insert(output_lines, "")
     end
 
-    Window.createResultsWindow(output_lines)
+    Window.create_results_window(output_lines)
   end, function(exit_code)
     if exit_code ~= 0 then
       Notify.progress_update(handle, "Command failed with exit code: " .. exit_code)
@@ -64,11 +40,40 @@ local function executeCommand(command)
   end)
 end
 
+local function list_outdated()
+  execute_command("dotnet list package --outdated")
+end
+
+
+---@type table<string, fun()>
+local commands = {
+  ["List outdated"] = list_outdated,
+}
+
+function M.openMainMenu()
+  local options = commands or {}
+
+  local selections = {}
+  for k in pairs(options) do
+    table.insert(selections, k)
+  end
+
+  ---@param row integer
+  local function select_current_line(row)
+    local choice = selections[row]
+    if choice then
+      M.executeCommand(choice)
+    end
+  end
+
+  Window.create_telescope_window(selections, select_current_line, nil, "Available Commands")
+end
+
 ---@param command string the command to execute
 function M.executeCommand(command)
   local cmd = commands[command]
 
-  executeCommand(cmd)
+  cmd()
 end
 
 vim.api.nvim_create_user_command("Nuggets", function()
