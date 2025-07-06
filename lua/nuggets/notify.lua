@@ -18,6 +18,7 @@ function M.notify_error(msg)
 end
 
 ---@param message string
+---@return ProgressHandle
 function M.create_progress_handle(message)
   local progress = require("fidget.progress")
   local handle = progress.handle.create({
