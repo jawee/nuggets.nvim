@@ -1,8 +1,8 @@
 local M = {}
 
-local Window = require("nuggets.window")
 local Notify = require("nuggets.notify")
 local Parser = require("nuggets.parser")
+local Window = require("nuggets.window")
 
 ---@param args table
 ---@param on_stdout fun(data: table<string>)
@@ -31,6 +31,7 @@ end
 ---@param command string the command to execute
 local function execute_command(command)
   local handle = Notify.create_progress_handle("Executing command: " .. command)
+  local the_output = {}
   run_async_command({ command }, function(data)
     local output = table.concat(data, "\n")
 
@@ -51,11 +52,13 @@ local function execute_command(command)
       end
       table.insert(output_lines, "")
     end
-
-    Window.create_results_window(output_lines)
+    the_output = output_lines
   end, function(exit_code)
     if exit_code ~= 0 then
-      Notify.progress_update(handle, "Command failed with exit code: " .. exit_code)
+      Notify.progress_report(handle, "Command failed with exit code: " .. exit_code)
+    end
+    if exit_code == 0 then
+      Window.create_results_window(the_output)
     end
     Notify.progress_finish(handle)
   end)

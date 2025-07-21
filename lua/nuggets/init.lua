@@ -1,5 +1,5 @@
-local Window = require("nuggets.window")
 local Commands = require("nuggets.commands")
+local Window = require("nuggets.window")
 
 local M = {}
 
