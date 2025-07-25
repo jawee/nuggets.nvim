@@ -41,7 +41,7 @@ local get_lines_from_string = function(str)
 end
 
 --- @param str string
---- @returns table<string, table<string, {Requested: string, Latest: string}>>
+--- @return table<string, table<string, {Requested: string, Latest: string}>>
 function M.parse(str)
   local lines = get_lines_from_string(str)
 
