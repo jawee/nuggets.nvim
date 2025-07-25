@@ -2,7 +2,6 @@ local M = {}
 
 local Notify = require("nuggets.notify")
 local Parser = require("nuggets.parser")
-local Window = require("nuggets.window")
 
 ---@param args table
 ---@param on_stdout fun(data: table<string>)
@@ -68,33 +67,30 @@ local function execute_command(command)
   end
 
   local command_output = ""
-  run_async_command({ command },
-    function(data)
-      command_output = table.concat(data, "\n")
-    end,
-    function(exit_code)
-      if exit_code ~= 0 then
-        Notify.progress_report(handle, "Command failed with exit code: " .. exit_code)
-      else
-        local projs = Parser.parse(command_output)
+  run_async_command({ command }, function(data)
+    command_output = table.concat(data, "\n")
+  end, function(exit_code)
+    if exit_code ~= 0 then
+      Notify.progress_report(handle, "Command failed with exit code: " .. exit_code)
+    else
+      local projs = Parser.parse(command_output)
 
-        Notify.progress_report(handle, "Updating packages..")
-        for project, packages in pairs(projs) do
-          if csproj_map[project] then
-            local csproj_path = csproj_map[project]
-            for package, _ in pairs(packages) do
-              local add_command = string.format('dotnet add "%s" package "%s"', csproj_path, package)
-              run_async_command({ add_command }, function() end, function() end)
+      Notify.progress_report(handle, "Updating packages..")
+      for project, packages in pairs(projs) do
+        if csproj_map[project] then
+          local csproj_path = csproj_map[project]
+          for package, _ in pairs(packages) do
+            local add_command = string.format('dotnet add "%s" package "%s"', csproj_path, package)
+            run_async_command({ add_command }, function() end, function() end)
 
-              vim.fn.systemlist(add_command)
-            end
+            vim.fn.systemlist(add_command)
           end
         end
-        Notify.progress_report(handle, "Packages updated successfully.")
       end
-      Notify.progress_finish(handle)
+      Notify.progress_report(handle, "Packages updated successfully.")
     end
-  )
+    Notify.progress_finish(handle)
+  end)
 end
 
 function M.update_all()
