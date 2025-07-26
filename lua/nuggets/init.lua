@@ -9,6 +9,7 @@ function M.setup(_) end
 local commands = {
   ["List outdated"] = Commands.list_outdated,
   ["Add Package"] = Commands.add_nuget,
+  ["Update All Packages"] = Commands.update_all,
 }
 
 function M.openMainMenu()
